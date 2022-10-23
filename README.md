@@ -11,6 +11,7 @@ source Scripts/activate
 py -m pip install django  
 py -m pip install djangorestframework  
 cd mysite  
+py manage.py createsuperuser
 py manage.py makemigrations mysite
 py manage.py migrate
 py manage.py runserver
