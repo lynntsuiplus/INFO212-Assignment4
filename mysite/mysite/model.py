@@ -1,14 +1,7 @@
 # mysite/models.py
+from .serializers import *
 from django.db import models
 from django.core.validators import *
-
-
-class Car(models.Model):
-    make = models.CharField(max_length=50)
-    carmodel = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f'{self.make}, {self.carmodel}'
 
 
 class Customer(models.Model):
@@ -18,3 +11,26 @@ class Customer(models.Model):
 
     def __str__(self):
         return f'{self.name}, {self.age}, {self.address}'
+
+
+class Car(models.Model):
+    class CarStatus(models.TextChoices):
+        AVAILABLE = 'A', 'Available'
+        BOOKED = 'B', 'Booked'
+        RENTED = 'R', 'Rented'
+        DAMAGED = 'D', 'Damaged'
+    make = models.CharField(max_length=50)
+    carmodel = models.CharField(max_length=50)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    year = models.PositiveIntegerField()
+    location = models.CharField(max_length=50)
+    status = models.CharField(
+        max_length=1,
+        choices=CarStatus.choices,
+        default=CarStatus.AVAILABLE
+    )
+
+    def __str__(self):
+        return f'{self.make}, {self.carmodel}'
+
+
