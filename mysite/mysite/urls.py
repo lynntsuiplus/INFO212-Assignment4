@@ -20,9 +20,13 @@ from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("cars/", get_cars),
+    path("get_car_by_id/", get_car_by_id),
     path("save_car/", save_car),
     path("update_car/<int:id>", update_car),
     path("delete_car/<int:id>", delete_car),
-    path("customers/", get_customers)
+    path("customers/", get_customers),
+    path("create_customer/", create_customer),
+    path("update_customer/", update_customer),
+    path("delete_customer/", delete_customer),
 
 ]
