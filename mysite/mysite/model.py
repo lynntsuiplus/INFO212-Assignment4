@@ -1,5 +1,4 @@
 # mysite/models.py
-from .serializers import *
 from django.db import models
 from django.core.validators import *
 
@@ -20,7 +19,7 @@ class Car(models.Model):
         RENTED = 'R', 'Rented'
         DAMAGED = 'D', 'Damaged'
     make = models.CharField(max_length=50)
-    carmodel = models.CharField(max_length=50)
+    car_model = models.CharField(max_length=50)
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     year = models.PositiveIntegerField()
     location = models.CharField(max_length=50)
@@ -31,6 +30,6 @@ class Car(models.Model):
     )
 
     def __str__(self):
-        return f'{self.make}, {self.carmodel}'
+        return f'{self.make}, {self.car_model}, {self.year}, {self.location}'
 
 

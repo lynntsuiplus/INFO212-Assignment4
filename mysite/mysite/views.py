@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .serializers import *
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 
 
 @api_view(['GET'])
@@ -12,6 +13,7 @@ def get_cars(request):
     serializer = CarSerializer(cars, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def get_car_by_id(request, id):
@@ -63,6 +65,7 @@ def get_customers(request):
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def get_customer_by_id(request, id):
     try:
@@ -104,3 +107,20 @@ def delete_customer(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     the_customer.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def cancel_car_order(request, customer_id, car_id):
+    try:
+        the_car = Car.objects.get(pk=car_id)
+    except Car.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if the_car.customer is not None and the_car.customer.id == customer_id:
+        the_car.status = Car.CarStatus.AVAILABLE
+        the_car.customer = None
+        the_car.save()
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

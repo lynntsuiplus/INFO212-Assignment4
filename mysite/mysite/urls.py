@@ -28,5 +28,5 @@ urlpatterns = [
     path("create_customer/", create_customer),
     path("update_customer/", update_customer),
     path("delete_customer/", delete_customer),
-
+    path("cancel_order/<int:customer_id>/<int:car_id>", cancel_car_order),
 ]
