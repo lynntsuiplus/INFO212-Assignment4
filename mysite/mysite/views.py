@@ -1,7 +1,7 @@
 # mysite/views.py
-from .model import Car
+from .model import *
 from rest_framework.response import Response
-from .serializers import CarSerializer
+from .serializers import *
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -45,3 +45,11 @@ def delete_car(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     the_car.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def get_customers(request):
+    customers = Customer.objects.all()
+    serializer = CustomerSerializer(customers, many=True)
+    print(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)

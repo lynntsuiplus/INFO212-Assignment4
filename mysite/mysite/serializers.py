@@ -1,9 +1,15 @@
 # mysite/serializers.py
 from rest_framework import serializers
-from .model import Car
+from .model import *
 
 
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = ['id', 'make', 'carmodel']
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['name', 'age', 'address']
