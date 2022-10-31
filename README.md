@@ -3,8 +3,8 @@ Group 1 Oblig Group 2
 * Leander Giskegjerde Urtegård  
 * Qingle Xu  
 
-
-To get server setup run these commands in order
+https://github.com/lynntsuiplus/INFO212-Assignment4
+To get the server setup after cloning the repository, run these commands in order
 ```
 py –m virtualenv INFO212-Assignment4/
 source INFO212-Assignment4/scripts/activate  
