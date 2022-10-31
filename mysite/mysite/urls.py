@@ -34,5 +34,6 @@ urlpatterns = [
     path("update_employees/", update_employee),
     path("delete_employees/", delete_employee),
     path("rent_car/<int:id>", rent_car),
-
+    path("order_car/<int:customer_id>/<int:car_id>", order_car),
+    path("return_car/<int:customer_id>/<int:car_id>/<str:car_status>", return_car),
 ]

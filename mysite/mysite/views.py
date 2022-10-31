@@ -128,18 +128,64 @@ def cancel_car_order(request, customer_id, car_id):
 
 
 @api_view(['POST'])
-@csrf_exempt
+def order_car(request, customer_id, car_id):
+    try:
+        the_car = Car.objects.get(pk=car_id)
+    except Car.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        the_customer = Customer.objects.get(pk=customer_id)
+    except Customer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if the_car.status == Car.CarStatus.AVAILABLE and Car.objects.filter(customer_id=customer_id).count() == 0:
+        the_car.status = Car.CarStatus.BOOKED
+        the_car.customer = the_customer
+        the_car.save()
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
 def rent_car(request, customer_id, car_id):
     try:
         the_car = Car.objects.get(pk=car_id)
     except Car.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if the_car.customer is not None and the_car.customer.id == customer_id:
+    try:
+        the_customer = Customer.objects.get(pk=customer_id)
+    except Customer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if the_car.status == Car.CarStatus.BOOKED and Car.objects.filter(customer_id=customer_id).count() == 0:
         the_car.status = Car.CarStatus.RENTED
+        the_car.customer = the_customer
+        the_car.save()
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def return_car(request, customer_id, car_id, car_status):
+    try:
+        the_car = Car.objects.get(pk=car_id)
+    except Car.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        the_customer = Customer.objects.get(pk=customer_id)
+    except Customer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    
+    if car_status in [Car.CarStatus.AVAILABLE, Car.CarStatus.DAMAGED] and (the_car.customer is not None and the_car.customer.id == customer_id):
+        the_car.status = car_status
+
         the_car.customer = None
         the_car.save()
-        return Response(status=status.HTTP_205_RESET_CONTENT)
+        return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -193,3 +239,4 @@ def delete_employee(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     the_employee.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
