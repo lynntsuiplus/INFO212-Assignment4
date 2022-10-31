@@ -11,9 +11,9 @@ source INFO212-Assignment4/scripts/activate
 py -m pip install django  
 py -m pip install djangorestframework  
 cd mysite  
-py manage.py createsuperuser
 py manage.py makemigrations mysite
 py manage.py migrate
+py manage.py createsuperuser
 py manage.py runserver
 ```
 
@@ -24,8 +24,8 @@ source INFO212-Assignment4/bin/activate
 python3 -m pip install django  
 python3 -m pip install djangorestframework  
 cd mysite  
-python3 manage.py createsuperuser
 python3 manage.py makemigrations mysite
 python3 manage.py migrate
+python3 manage.py createsuperuser
 python3 manage.py runserver
 ```
