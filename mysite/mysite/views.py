@@ -159,9 +159,8 @@ def rent_car(request, customer_id, car_id):
     except Customer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if the_car.status == Car.CarStatus.BOOKED and Car.objects.filter(customer_id=customer_id).count() == 0:
+    if the_car.status == Car.CarStatus.BOOKED and the_car.customer.id == customer_id:
         the_car.status = Car.CarStatus.RENTED
-        the_car.customer = the_customer
         the_car.save()
         return Response(status=status.HTTP_200_OK)
     else:
