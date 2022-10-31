@@ -32,4 +32,12 @@ class Car(models.Model):
     def __str__(self):
         return f'{self.make}, {self.car_model}, {self.year}, {self.location}'
 
+class Employee(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    branch = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.name}, {self.address}, {self.branch}'
+
 
