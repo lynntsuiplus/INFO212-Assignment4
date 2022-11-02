@@ -190,7 +190,7 @@ def return_car(request, customer_id, car_id, car_status):
 
 
 @api_view(['GET'])
-def get_employee(request):
+def get_employees(request):
     employees = Employee.objects.all()
     serializer = EmployeeSerializer(employees, many=True)
     print(serializer.data)
@@ -209,7 +209,7 @@ def get_employee_by_id(request, id):
 
 
 @api_view(['POST'])
-def create_employees(request):
+def create_employee(request):
     serializer = EmployeeSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
