@@ -3,6 +3,8 @@ Group 1 Oblig Group 2
 * Leander Giskegjerde Urtegård  
 * Qingle Xu  
 
+https://hub.docker.com/repository/docker/leanderurtegaard/django-docker
+
 https://github.com/lynntsuiplus/INFO212-Assignment4  
 To get the server setup after cloning the repository, run these commands in order
 ```
